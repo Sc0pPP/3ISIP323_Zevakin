@@ -1,4 +1,6 @@
-﻿int size;
+﻿using System.Security.Authentication;
+
+int size;
 
 int sum=0;
 Console.WriteLine("Введите колличество товаров");
@@ -56,4 +58,20 @@ for (int i = 0; (i) < cost.Length; (i)++)
 for (int i = 0;i< size; i++)
 {
     Console.WriteLine($"{cost[i]},{prompt[i]}");
+}
+Console.WriteLine("Напишите запрос для поиска");
+string promp = Console.ReadLine();
+bool bl = false;
+foreach (string massi in prompt)
+{
+    if (massi.Contains(promp))
+    {
+        Console.WriteLine(massi + " есть в списке");
+        bl = true;
+    }
+
+}
+if (!bl)
+{
+    Console.WriteLine("Не найденно");
 }
