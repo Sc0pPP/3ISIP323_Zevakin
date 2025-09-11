@@ -1,11 +1,17 @@
 ﻿int size;
 
-int[] cost = [];
+int sum=0;
 Console.WriteLine("Введите колличество товаров");
 size=Convert.ToInt32 (Console.ReadLine());
-string[] prompt = new string[size+1];
+string[] prompt = new string[size];
+int[] cost = new int[size];
 Console.WriteLine("Вводите товары по шаблону (Название услуги или товара; Количество денег)");
-for (int i = 0; i <= size; i++)
+string[] input;
+for (int i = 0; i < size; i++)
 {
-    prompt[i] = Console.ReadLine();
+    input = Console.ReadLine().Split("; ");
+
+    prompt[i] = input[0];
+    cost[i] = Convert.ToInt32(input[1]);
+    sum+= cost[i];
 }
