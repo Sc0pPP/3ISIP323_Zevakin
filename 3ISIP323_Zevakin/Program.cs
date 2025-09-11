@@ -36,5 +36,24 @@ for (int i = 0; i < size; i++)
 }
 Console.WriteLine($"минимальное-{temp1}");
 Console.WriteLine($"Среднее-{sum / size}");
-
-
+string temp2;
+for (int i = 0; (i) < cost.Length; (i)++)
+{
+    for (int j = 0; j < cost.Length - 1; j++)
+    {
+        if (cost[j] < cost[j + 1])
+        {
+            int temp = cost[j];
+            cost[j] = cost[j + 1];
+            cost[j + 1] = temp;
+           
+            temp2 = prompt[j];
+            prompt[j] = prompt[j + 1];
+            prompt[j + 1] = temp2;
+        }
+    }
+}
+for (int i = 0;i< size; i++)
+{
+    Console.WriteLine($"{cost[i]},{prompt[i]}");
+}
