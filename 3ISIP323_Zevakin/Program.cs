@@ -17,61 +17,76 @@ for (int i = 0; i < size; i++)
     cost[i] = Convert.ToInt32(input[1]);
     sum+= cost[i];
 }
-
-int temp1=0;
-
-for (int i = 0; i < size; i++)
-{
-    if (cost[i] > temp1)
+Console.WriteLine("1-стат;2-сорт;3-поиск по названию");
+int inpt = Convert.ToInt32(Console.ReadLine());
+    switch (inpt)
     {
-        temp1 = cost[i];
-    }
-}
-Console.WriteLine($"МАКСИМАЛЬНОЕ-{temp1}");
+        case 1:
+            int temp1 = 0;
 
-for (int i = 0; i < size; i++)
-{
-    if (cost[i] < temp1)
-    {
-        temp1 = cost[i];
-    }
-}
-Console.WriteLine($"минимальное-{temp1}");
-Console.WriteLine($"Среднее-{sum / size}");
-string temp2;
-for (int i = 0; (i) < cost.Length; (i)++)
-{
-    for (int j = 0; j < cost.Length - 1; j++)
-    {
-        if (cost[j] < cost[j + 1])
-        {
-            int temp = cost[j];
-            cost[j] = cost[j + 1];
-            cost[j + 1] = temp;
-           
-            temp2 = prompt[j];
-            prompt[j] = prompt[j + 1];
-            prompt[j + 1] = temp2;
-        }
-    }
-}
-for (int i = 0;i< size; i++)
-{
-    Console.WriteLine($"{cost[i]},{prompt[i]}");
-}
-Console.WriteLine("Напишите запрос для поиска");
-string promp = Console.ReadLine();
-bool bl = false;
-foreach (string massi in prompt)
-{
-    if (massi.Contains(promp))
-    {
-        Console.WriteLine(massi + " есть в списке");
-        bl = true;
-    }
+            for (int i = 0; i < size; i++)
+            {
+                if (cost[i] > temp1)
+                {
+                    temp1 = cost[i];
+                }
+            }
+            Console.WriteLine($"МАКСИМАЛЬНОЕ-{temp1}");
 
-}
-if (!bl)
-{
-    Console.WriteLine("Не найденно");
-}
+            for (int i = 0; i < size; i++)
+            {
+                if (cost[i] < temp1)
+                {
+                    temp1 = cost[i];
+                }
+            }
+            Console.WriteLine($"минимальное-{temp1}");
+            Console.WriteLine($"Среднее-{sum / size}");
+            break;
+        case 2:
+            string temp2;
+            for (int i = 0; (i) < cost.Length; (i)++)
+            {
+                for (int j = 0; j < cost.Length - 1; j++)
+                {
+                    if (cost[j] < cost[j + 1])
+                    {
+                        int temp = cost[j];
+                        cost[j] = cost[j + 1];
+                        cost[j + 1] = temp;
+
+                        temp2 = prompt[j];
+                        prompt[j] = prompt[j + 1];
+                        prompt[j + 1] = temp2;
+                    }
+                }
+            }
+            for(int i = 0; i < size; i++)
+            {
+            Console.WriteLine($"{prompt[i]}-{cost[i]}");
+            }
+            break;
+
+    case 3:
+            Console.WriteLine("Напишите запрос для поиска");
+            string promp = Console.ReadLine();
+            bool bl = false;
+            foreach (string massi in prompt)
+            {
+                if (massi.Contains(promp))
+                {
+                    Console.WriteLine(massi + " есть в списке");
+                    bl = true;
+                }
+
+            }
+            if (!bl)
+            {
+                Console.WriteLine("Не найденно");
+            }
+            break;
+    }
+return 0;
+   
+ 
+    
