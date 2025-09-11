@@ -15,3 +15,26 @@ for (int i = 0; i < size; i++)
     cost[i] = Convert.ToInt32(input[1]);
     sum+= cost[i];
 }
+
+int temp1=0;
+
+for (int i = 0; i < size; i++)
+{
+    if (cost[i] > temp1)
+    {
+        temp1 = cost[i];
+    }
+}
+Console.WriteLine($"МАКСИМАЛЬНОЕ-{temp1}");
+
+for (int i = 0; i < size; i++)
+{
+    if (cost[i] < temp1)
+    {
+        temp1 = cost[i];
+    }
+}
+Console.WriteLine($"минимальное-{temp1}");
+Console.WriteLine($"Среднее-{sum / size}");
+
+
