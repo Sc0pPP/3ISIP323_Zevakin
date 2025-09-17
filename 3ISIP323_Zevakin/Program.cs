@@ -1,25 +1,46 @@
 ﻿//проверка
 List<tovar> tovary = new List<tovar>();
+void poiskID() {
+    int temp=Convert.ToInt32(Console.ReadLine());
 foreach(tovar t in tovary)
 {
-    
+        if (t.id == temp)
+        {
+            Console.WriteLine($"{t.name}, {t.id}, {t.cost}, {t.count},{t.presence},{t.category}");
+        }
+        else
+        {
+            Console.WriteLine("товар не найден");
+        }
+}
 }
 void add()
 {
-
+    tovar newtowar = new tovar();
     tovar.ids++;
+    newtowar.id = tovar.ids++;
     Console.WriteLine("Введите название товара");
     string nname = Console.ReadLine();
-    tovar.name = nname;
+    newtowar.name = nname;
     Console.WriteLine("Введите цену товара");
-    tovar.cost = Convert.ToInt32(Console.ReadLine());
+    newtowar.cost = Convert.ToInt32(Console.ReadLine());
     Console.WriteLine("Введите колличесвто товара");
-    tovar.count = Convert.ToInt32(Console.ReadLine());
+    newtowar.count = Convert.ToInt32(Console.ReadLine());
     Console.WriteLine("Введите категорию товара\nwater/snack/chebumany");
-    tovar.category = Console.ReadLine();
+    newtowar.category = Console.ReadLine();
+    newtowar.presence = true;
+    tovary.Add(newtowar);
 }
 void delete()
 {
+    Console.WriteLine("Введите ID или название товара для удаления");
+    string input = Console.ReadLine();
+
+    tovar found = tovary.FirstOrDefault(t => t.name == input);
+    if (found != null)
+    {
+        tovary.Remove(found);
+    }
 
 }
 
@@ -36,12 +57,12 @@ class tovar
 {
 
     public static int ids = 1;
-    public static int id;
-    public static string name;
-    public static int cost;
-    public static int count;
-    public static bool presence;
-    public static string category;
+    public int id;
+    public string name;
+    public int cost;
+    public int count;
+    public bool presence;
+    public string category;
    
 }
 
