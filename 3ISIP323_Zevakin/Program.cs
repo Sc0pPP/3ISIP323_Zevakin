@@ -1,6 +1,17 @@
 ﻿//проверка
+using System.Diagnostics;
+using System.Xml.Linq;
+using static tovar;
+
 List<tovar> tovary = new List<tovar>();
-Stack<tovar> stack = new Stack<tovar>();
+int total = 0;
+int temp_sale_tovar = 0;
+Stack<tovar.SaleRecord> history = new Stack<tovar.SaleRecord>();
+tovary.Add(new tovar("lesha", 100, 25, (category)3));
+tovary.Add(new tovar("bread", 3949, 1099, (category)2));
+tovary.Add(new tovar("water", 50, 566, (category)1));
+tovary.Add(new tovar("tomato", 400, 900, (category)2));
+tovary.Add(new tovar("potato", 67, 300, (category)2));
 while (true)
 {
     Console.WriteLine("------------------------------------------------"+
@@ -10,16 +21,15 @@ while (true)
         "Заказать товар-3\n" +
         "Продать товар-4\n" +
         "Поиск-5\n"+
-        "вывести весь товар\n"+
+        "вывести весь товар-6\n"+
+        "Отменить последнюю продажу-7\n"+
+        "статистика продаж - 8\n"+
         "------------------------------------------------");
     int ttemp=Convert.ToInt32(Console.ReadLine());
     switch (ttemp)
     {
         case 1:
-            Console.WriteLine("введите название");
-            string temp=Console.ReadLine();
             add();
-            
             break;
         case 2:
             delete();
@@ -55,11 +65,43 @@ while (true)
                 Console.WriteLine($"{t.name}, {t.id}, {t.cost}, {t.count},{t.presence},{t.categ}");
             }
                 break;
+            case 7:
+            undoSale();
+            break;
+            case 8:
+            stat();
+                break;
         case 0:
             return 0;
     }
 }
+
+void undoSale()
+{
+    Console.WriteLine("Хотите отменить последнюю операцию?(y/n)");
+    string temp=Console.ReadLine();
+    if (temp == "y")
+    {
+        history.Pop();
+    }
+}
+
+void stat()
+{
+    int temp_count = 0;
+    int temp_cost = 0;
+
+    foreach(tovar.SaleRecord t in history)
+    {
+        temp_count += t.Quantity;
+        temp_cost += t.Quantity * t.TotalPrice;
+        Console.WriteLine($"{t.ProductName},{t.Quantity} проданно на сумму:{t.Quantity * t.TotalPrice}");
+    }
+    Console.WriteLine($"{temp_count} колличество всего проданного товара");
+    Console.WriteLine($"{temp_cost} цена всего проданного товара");
+}
 void poiskID() {
+    bool temp1=true;  
     Console.WriteLine("Введите id товара");
     int temp=Convert.ToInt32(Console.ReadLine());
 foreach(tovar t in tovary)
@@ -67,12 +109,17 @@ foreach(tovar t in tovary)
         if (t.id == temp)
         {
             Console.WriteLine($"{t.name}, {t.id}, {t.cost}, {t.count},{t.presence},{t.categ}");
+            temp1= false;
         }
         else
         {
             Console.WriteLine("товар не найден");
         }
 }
+if(temp1)
+    {
+        Console.WriteLine("товар не найден");
+    }
 }
 void poiskName()
 {
@@ -109,61 +156,79 @@ void poiskKategory()
 
 void postavka()
 {
+    bool temp2=true;
     Console.WriteLine("Напишите уже добавленный товар,на который вы хотите оформить поставку");
     string temp= Console.ReadLine();
     foreach(tovar t in tovary)
     {
         if (temp == t.name)
         {
-            Console.WriteLine("напиишите колличество товара который хотите заказать");
+            Console.WriteLine("напишите колличество товара который хотите заказать");
             int temp1=Convert.ToInt32(Console.ReadLine());
             t.count += temp1;
+            temp2 = false;
+            
         }
-        else
-        {
-            Console.WriteLine("вашего товара не нашлось в списке(");
-        }
+
+    }
+    if (temp2)
+    {
+        Console.WriteLine("Не нашлось(");
     }
 }
 void prodat()
 {
     Console.WriteLine("Напишите уже добавленный товар,который вы хотите продать");
     string temp = Console.ReadLine();
+    bool temp4 = true;
+    bool temp5 = true;
     foreach (tovar t in tovary)
     {
         if (temp == t.name)
         {
             Console.WriteLine("напиишите колличество товара который хотите продать");
-            int temp1 = Convert.ToInt32(Console.ReadLine());
-            if (t.count >= temp1)
+            temp_sale_tovar = Convert.ToInt32(Console.ReadLine());
+            if (t.count >= temp_sale_tovar)
             {
-                t.count -= temp1;
+                
+                var temp3= new SaleRecord(t.id, t.name, temp_sale_tovar, t.cost);
+                history.Push(temp3);
+                total += (temp_sale_tovar * t.count);
+                t.count -= temp_sale_tovar;
+                //Console.WriteLine(total);
+                temp4= false;
             }
-            else
-            {
-                Console.WriteLine("вашего товара недостаточно в наличии");
-            }
+            
             }
         else
         {
-            Console.WriteLine("вашего товара не нашлось в списке(");
+            temp5= false;
         }
+    }
+    if (temp4)
+    {
+        Console.WriteLine("товара недостаточно");
+    }
+
+    if (temp5)
+    {
+        Console.WriteLine("Товар не найден");
     }
 }
 void add()
 {
-    tovar newtowar = new tovar();
-    tovar.ids+=1;
-    newtowar.id = tovar.ids;
+    
+    tovar.ids += 1;
     Console.WriteLine("Введите название товара");
-    string nname = Console.ReadLine();
-    newtowar.name = nname;
+    string nnam = Console.ReadLine();
     Console.WriteLine("Введите цену товара");
-    newtowar.cost = Convert.ToInt32(Console.ReadLine());
+    int cos = Convert.ToInt32(Console.ReadLine());
     Console.WriteLine("Введите колличесвто товара");
-    newtowar.count = Convert.ToInt32(Console.ReadLine());
+    int coun = Convert.ToInt32(Console.ReadLine());
     Console.WriteLine("Введите категорию товара\nwater-1/snack-2/chebumany-3");
-    newtowar.categ = (category)Convert.ToInt32(Console.ReadLine());
+    int cate= Convert.ToInt32(Console.ReadLine());
+    tovar newtowar = new tovar(nnam,cos,coun,(category)cate);
+    newtowar.id = tovar.ids;
     newtowar.presence = true;
     tovary.Add(newtowar);
 }
@@ -172,14 +237,14 @@ void delete()
     Console.WriteLine("Введите название товара для удаления");
     string input = Console.ReadLine();
 
-    tovar found = tovary.FirstOrDefault(t => t.name == input);
-    if (found != null)
+    foreach (tovar t in tovary.ToList())
     {
-        tovary.Remove(found);
+        if (t.name == input)
+        {
+            tovary.Remove(t);
+        }
     }
-
 }
-
 
 enum category : long
 {
@@ -187,19 +252,44 @@ enum category : long
     snack=2,
     chebumany=3
 }
-
-
-class tovar
+ class tovar
 {
-
-    public static int ids = 1;
+    public static int ids = 0;
     public int id;
     public string name;
     public int cost;
     public int count;
     public bool presence;
-    public  category categ;
-   
+    public category categ;
+
+        public tovar(string n, int cos, int cou, category cat)
+    {
+        if (string.IsNullOrWhiteSpace(n)) throw new ArgumentException("Название товара не должно быть пустым");
+        if (cos <= 0) throw new ArgumentException("Цена должна быть положительной");
+        if (cou < 0) throw new ArgumentException("Количество не может быть отрицательным");
+        ids += 1;
+        id = ids;
+        name = n.Trim();
+        cost = cos;
+        count = cou;
+        categ = cat;
+        presence = true;
+    }
+    public class SaleRecord 
+{
+    public tovar tovhis;
+    public int ProductId { get; }
+    public string ProductName { get; set; }
+    public int Quantity { get; set; }
+    public int TotalPrice { get; set; }
+    public  SaleRecord(int productId, string productName, int quantity, int totalPrice)
+    {
+        ProductId=productId;
+        ProductName=productName;
+        Quantity=quantity;
+        TotalPrice=totalPrice;
+        
+    }
 }
 
-
+}
