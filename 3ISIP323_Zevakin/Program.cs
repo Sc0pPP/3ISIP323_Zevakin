@@ -15,4 +15,16 @@ public class book
     public int year;
     public decimal price;
 
+
+    public book (string name,string author,genre genre, int year,decimal price)
+    {
+        ids += 1;
+        id = ids;
+        this.name = name;
+        this.author = author;
+        this.genre = genre;
+        this.year = year;
+        this.price = price;
+
+    }
 }
