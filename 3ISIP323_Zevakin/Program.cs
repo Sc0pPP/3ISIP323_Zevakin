@@ -4,7 +4,7 @@ List <student> spisok_st= new List<student>();
 List<person> people = new List<person>();
 List<prepod> prepods = new List<prepod>();
 List<student> students = new List<student>();
-Dictionary<university_course, spisok_st> cour_stud = new Dictionary<university_course, spisok_st>();
+Dictionary<university_course,spisok_st> cour_stud = new Dictionary<university_course, spisok_st>();
 while true{
     Console.WriteLine("------------------------------------------------" +
         "выберете\n" +
@@ -14,21 +14,64 @@ while true{
         "записаться на курс-4\n" +
         "вывести всех людей-5\n" +
         "вывести одного студента и все его курсы-6\n" +
-        "vivod7" +
+        "вывести преподавателя-7" +
         "------------------------------------------------");
     int ttemp = Console.ReadLine();
     switch (ttemp)
     {
+        case 1:
+            student.add_student();
+            break;
+        case 2:
+            prepod.add();
+            break;
+        case 3:
+            university_course.add();
+            break;
+        case 4:
+            student.sign_up();
+            break;
+        case 5:
+            foreach(person p in people)
+            {
+                person.vivod(p);
+            }
+            break;
+        case 6:
+            int temp = Convert.ToInt32(Console.ReadLine());
 
+            
+                foreach(KeyValuePair<university_course,spisok_st> in cour_stud)
+                {
+                    foreach(student s in cour_stud.Values)
+                    {
+                        if (s.id == temp)
+                        {
+                            Console.WriteLine($"курс:{cour_stud.Keys.name_cour}")
+                        }
+                    }
+                
+            }
+            break;
+        case 7:
+            foreach(prepod k in prepods)
+            {
+                Console.WriteLine(k);
+            }
+            break;
     }
 }
-
 public class person
 {
     private static int ids;
-    private int id { get;set }
-    private int phone{ get;set }
-    private string name{ get;set }
+    private int id { get;private set }
+    private int phone{ get; private set }
+    private string name{ get; private set }
+
+    public void vivod()
+    {
+        Console.WriteLine($"{id},{phone},{name}")
+    }
     
 }
 public class prepod:person
@@ -40,6 +83,7 @@ public class prepod:person
     {
         ids += 1;
         this.id = ids;
+      
         this.experience = experience;
         this.phone = phone;
         this.name = name;
@@ -70,7 +114,7 @@ public class student : person
         this.name = name;
         this.group = group;
     }
-    public void add()
+    public void add_student()
     {
         Console.WriteLine("Введите имя препода");
         string name = Console.ReadLine();
