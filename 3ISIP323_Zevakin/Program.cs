@@ -1,12 +1,20 @@
-﻿class student
+﻿public class student
 {
 
+    public student()
+    {
+
+    }
 }
-class prepod
+public class prepod
 {
+    public prepod()
+    {
+
+    }
 
 }
-class university
+public class university :student,prepod
 {
 
 }
