@@ -18,7 +18,7 @@ class Program
     {
         while (true)
         {
-            Console.WriteLine("------------------------------------------------" +
+            Console.WriteLine("------------------------------------------------\n" +
                 "выберете\n" +
                 "добавить студента-1\n" +
                 "добавить преподавателя-2\n" +
@@ -26,7 +26,8 @@ class Program
                 "записаться на курс-4\n" +
                 "вывести всех людей-5\n" +
                 "вывести одного студента и все его курсы-6\n" +
-                "вывести преподавателя-7" +
+                "вывести преподавателя-7\n" +
+                "Вывести все курсы и всех студентов этих курсов\n"+
                 "------------------------------------------------");
             int ttemp = Convert.ToInt32(Console.ReadLine());
             switch (ttemp)
@@ -68,6 +69,17 @@ class Program
                         Console.WriteLine(k.Id + " " + k.Name);
                     }
                     break;
+                case 8:
+                    foreach (KeyValuePair<university_course, List<student>> cs in GlobalLists.cour_stud)
+                    {
+                        Console.WriteLine(cs.Key.NameCour);
+                        foreach (student s in cs.Value)
+                        {
+                            Console.WriteLine(s.Id + " " + s.Name);
+                        }
+                    }
+
+                    break;
             }
         }
     }
@@ -96,7 +108,6 @@ public class person
 
 public class prepod : person
 {
-    private static int ids = 0;
     public int Experience { get; private set; }
 
     public prepod(int experience, int phone, string name) : base(phone, name)
@@ -120,7 +131,6 @@ public class prepod : person
 
 public class student : person
 {
-    private static int ids = 0;
     public int Group { get; private set; }
     public int Course { get; private set; }
 
