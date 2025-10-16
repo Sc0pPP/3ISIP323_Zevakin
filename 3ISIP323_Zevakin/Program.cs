@@ -1,11 +1,34 @@
 ﻿class player
 {
 
+    
 }
 class enemy
 {
 
 }
+class equipment
+{
+    
+
+}
+
+class weapon:equipment
+{
+
+}
+
+class armor : equipment
+{
+
+}
+
+class potion : equipment
+{
+
+}
+
+
 
 class goblin : enemy
 {
