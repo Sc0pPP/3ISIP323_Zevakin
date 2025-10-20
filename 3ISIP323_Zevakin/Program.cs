@@ -37,11 +37,13 @@ class Program
         vragy.Add(s_b_k);
         vragy.Add(s_b_p);
         vragy.Add(m_b);
+        int progress;
         Console.WriteLine($"{g_b.health},{g_b.ataka}");
-        while (true)
+        bool hod_igry = true;
+        while (hod_igry)
         {
-            int progress = random.Next(1);
-            if (progress == 0)//сундук
+            progress = random.Next(100);
+            if (progress <= 50)//сундук
             {
                 int temp_item = random.Next(2);
                 if (temp_item == 0)
@@ -60,152 +62,185 @@ class Program
                         {
                             igrok.weapon = weapons[0];
                         }
+                    }
                         if (temp_weapon == 1)
                         {
                             Console.WriteLine("Согласны ли вы выбрать топор 2 ровня?y/n");
-                            temp_wp = Console.ReadLine();
+                            string temp_wp = Console.ReadLine();
                             if (temp_wp == "y")
                             {
                                 igrok.weapon = weapons[1];
                             }
                         }
-                        if (temp_weapon == 0)
+                        if (temp_weapon == 2)
                         {
                             Console.WriteLine("Согласны ли вы выбрать меч  3 ровня?y/n");
-                            temp_wp = Console.ReadLine();
+                            string temp_wp = Console.ReadLine();
                             if (temp_wp == "y")
                             {
                                 igrok.weapon = weapons[2];
                             }
                         }
-                        if (temp_item == 2)
+                    }
+                
+                    if (temp_item == 2)
+                    {
+                        int temp_armor = random.Next(2);
+                        if (temp_armor == 0)
                         {
-                            int temp_armor = random.Next(2);
-                            if (temp_weapon == 0)
+                            Console.WriteLine("Согласны ли вы выбрать палку 1 ровня?y/n");
+                            string temp_ar = Console.ReadLine();
+                            if (temp_ar == "y")
                             {
-                                Console.WriteLine("Согласны ли вы выбрать палку 1 ровня?y/n");
-                                string temp_ar = Console.ReadLine();
+                                igrok.armor = armors[0];
+                            }
+                            if (temp_armor == 1)
+                            {
+                                Console.WriteLine("Согласны ли вы выбрать топор 2 ровня?y/n");
+                                temp_ar = Console.ReadLine();
                                 if (temp_ar == "y")
                                 {
-                                    igrok.armor = armors[0];
-                                }
-                                if (temp_armor == 1)
-                                {
-                                    Console.WriteLine("Согласны ли вы выбрать топор 2 ровня?y/n");
-                                    temp_wp = Console.ReadLine();
-                                    if (temp_ar == "y")
-                                    {
-                                        igrok.armor = armors[1];
-                                    }
-                                }
-                                if (temp_armor == 0)
-                                {
-                                    Console.WriteLine("Согласны ли вы выбрать меч  3 ровня?y/n");
-                                    temp_wp = Console.ReadLine();
-                                    if (temp_ar == "y")
-                                    {
-                                        igrok.armor = armors[2];
-                                    }
+                                    igrok.armor = armors[1];
                                 }
                             }
-
+                            if (temp_armor == 0)
+                            {
+                                Console.WriteLine("Согласны ли вы выбрать меч  3 ровня?y/n");
+                                temp_ar = Console.ReadLine();
+                                if (temp_ar == "y")
+                                {
+                                    igrok.armor = armors[2];
+                                }
+                            }
                         }
-                        if (progress == 1)//бой
-                        {
-                            int temp_fight=random.Next(6);
-                            if(temp_fight == 0)
-                            {
-                                Console.WriteLine("Ты встретил гоблина!");
-                                if (igrok.health / vragy[0].ataka > vragy[0].health / igrok.weapon.damage)
-                                {
-                                    Console.WriteLine("Ты победил!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("увы ты проиграл...");
-                                }
 
-                            }
-                            if (temp_fight == 1)
-                            {
-                                Console.WriteLine("Ты встретил гоблина!");
-                                if (igrok.health / vragy[0].ataka > vragy[0].health / igrok.weapon.damage)
-                                {
-                                    Console.WriteLine("Ты победил!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("увы ты проиграл...");
-                                }
-                            }
-                            if (temp_fight == 2)
-                            {
-                                Console.WriteLine("Ты встретил гоблина!");
-                                if (igrok.health / vragy[0].ataka > vragy[0].health / igrok.weapon.damage)
-                                {
-                                    Console.WriteLine("Ты победил!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("увы ты проиграл...");
-                                }
-                            }
-                            if (temp_fight == 3)
-                            {
-                                Console.WriteLine("Ты встретил гоблина!");
-                                if (igrok.health / vragy[0].ataka > vragy[0].health / igrok.weapon.damage)
-                                {
-                                    Console.WriteLine("Ты победил!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("увы ты проиграл...");
-                                }
-                            }
-                            if (temp_fight == 4)
-                            {
-                                Console.WriteLine("Ты встретил гоблина!");
-                                if (igrok.health / vragy[0].ataka > vragy[0].health / igrok.weapon.damage)
-                                {
-                                    Console.WriteLine("Ты победил!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("увы ты проиграл...");
-                                }
-                            }
-                            if (temp_fight == 5)
-                            {
-                                Console.WriteLine("Ты встретил гоблина!");
-                                if (igrok.health / vragy[0].ataka > vragy[0].health / igrok.weapon.damage)
-                                {
-                                    Console.WriteLine("Ты победил!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("увы ты проиграл...");
-                                }
-                            }
-                            if (temp_fight == 6)
-                            {
-                                Console.WriteLine("Ты встретил гоблина!");
-                                if (igrok.health / vragy[0].ataka > vragy[0].health / igrok.weapon.damage)
-                                {
-                                    Console.WriteLine("Ты победил!");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("увы ты проиграл...");
-                                }
-                            }
-
-                        }
                     }
                 }
-            }
-        }
-    }
 
+
+                    if (progress > 50)//бой
+                    {
+                        int temp_fight = random.Next(100);
+                        if (temp_fight <= 25)
+                        {
+                            Console.WriteLine("Ты встретил гоблина!");
+                            int chance_sk = random.Next(100);
+                            if (chance_sk <= 15)
+                            {
+                                Console.WriteLine("гоблин нанес критический урон(");
+                                igrok.health = 50;
+                            }
+                            if ((igrok.health + igrok.armor.armr) / vragy[0].ataka > vragy[0].health / igrok.weapon.damage)
+                            {
+                                Console.WriteLine("Ты победил!");
+                                igrok.health = igrok.health - vragy[0].ataka;
+                            }
+                            else
+                            {
+                                Console.WriteLine("увы ты проиграл...");
+                                hod_igry = false;
+                            }
+
+                        }
+                        if (temp_fight <= 50 && temp_fight >= 25)
+                        {
+                            Console.WriteLine("Ты встретил скелета!");
+                            int temp_sk = random.Next(101);
+                            if (temp_sk <= 15)
+                            {
+                                Console.WriteLine("Скелет нанес критический урон(");
+                                igrok.health = 30;
+                            }
+                            if ((igrok.health + igrok.armor.armr) / vragy[1].ataka > vragy[1].health / igrok.weapon.damage)
+                            {
+                                Console.WriteLine("Ты победил!");
+                            igrok.health = igrok.health - vragy[1].ataka;
+                    }
+                            else
+                            {
+                                Console.WriteLine("увы ты проиграл...");
+                                hod_igry = false;
+                            }
+                        }
+                        if (temp_fight <= 75 && temp_fight >= 50)
+                        {
+                            Console.WriteLine("Ты встретил мага!");
+                            //из за говнокода не знаю как сделать пропуск хода игрока(
+                            if ((igrok.health + igrok.armor.armr) / vragy[2].ataka > vragy[2].health / igrok.weapon.damage)
+                            {
+                                Console.WriteLine("Ты победил!");
+                                igrok.health = igrok.health - vragy[2].ataka;
+                            }
+                            else
+                            {
+                                Console.WriteLine("увы ты проиграл...");
+                                hod_igry = false;
+                            }
+                        }
+                        if (temp_fight <= 83 && temp_fight >= 75)
+                        {
+                            Console.WriteLine("Ты встретил босса гоблинов ВВГ!");
+                            if ((igrok.health + igrok.armor.armr) / vragy[3].ataka > vragy[3].health / igrok.weapon.damage)
+                            {
+                                Console.WriteLine("Ты победил!");
+                                igrok.health = igrok.health - vragy[3].ataka;
+                            }
+                            else
+                            {
+                                Console.WriteLine("увы ты проиграл...");
+                                hod_igry = false;
+                            }
+                        }
+                        if (temp_fight <= 89 && temp_fight >= 83)
+                        {
+                            Console.WriteLine("Ты встретил боса скелетов Ковалевского!");
+                            if ((igrok.health + igrok.armor.armr) / vragy[4].ataka > vragy[4].health / igrok.weapon.damage)
+                            {
+                                Console.WriteLine("Ты победил!");
+                                igrok.health = igrok.health - vragy[4].ataka;
+                            }
+                            else
+                            {
+                                Console.WriteLine("увы ты проиграл...");
+                                hod_igry = false;
+                            }
+                        }
+                        if (temp_fight <= 94 && temp_fight >= 89)
+                        {
+                            Console.WriteLine("Ты встретил боса скелетов Песов С--!");
+                            if ((igrok.health + igrok.armor.armr) / vragy[5].ataka > vragy[5].health / igrok.weapon.damage)
+                            {
+                                Console.WriteLine("Ты победил!");
+                                igrok.health = igrok.health - vragy[5].ataka;
+                            }
+                            else
+                            {
+                                Console.WriteLine("увы ты проиграл...");
+                                hod_igry = false;
+                            }
+                        }
+                        if (temp_fight <= 100 && temp_fight >= 94)
+                        {
+                            Console.WriteLine("Ты встретил босса магов Архимаг C++!");
+                            if ((igrok.health + igrok.armor.armr) / vragy[6].ataka > vragy[6].health / igrok.weapon.damage)
+                            {
+                                Console.WriteLine("Ты победил!");
+                                igrok.health = igrok.health - vragy[6].ataka;
+                            }
+                            else
+                            {
+                                Console.WriteLine("увы ты проиграл...");
+                                hod_igry = false;
+                            }
+                        }
+
+                    }
+
+                }
+        }        
+}
+        
+    
 
 
 
@@ -214,7 +249,7 @@ class Program
 
     public class player
     {
-        public int health = 100;
+        public double health = 100;
         public string name { get; set; }
         public weapon weapon;
         public armor armor;
@@ -352,5 +387,5 @@ class Program
         }
 
     }
-}
+
 
