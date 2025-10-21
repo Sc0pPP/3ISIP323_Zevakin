@@ -45,7 +45,7 @@ class Program
             progress = random.Next(100);
             if (progress <= 50)//сундук
             {
-                int temp_item = random.Next(2);
+                int temp_item = random.Next(3);
                 if (temp_item == 0)
                 {
                     Console.WriteLine("Вам выпало зелье регенерации!");
@@ -63,64 +63,80 @@ class Program
                             igrok.weapon = weapons[0];
                         }
                     }
-                        if (temp_weapon == 1)
+                    if (temp_weapon == 1)
+                    {
+                        Console.WriteLine("Согласны ли вы выбрать топор 2 ровня?y/n");
+                        string temp_wp = Console.ReadLine();
+                        if (temp_wp == "y")
                         {
-                            Console.WriteLine("Согласны ли вы выбрать топор 2 ровня?y/n");
-                            string temp_wp = Console.ReadLine();
-                            if (temp_wp == "y")
-                            {
-                                igrok.weapon = weapons[1];
-                            }
-                        }
-                        if (temp_weapon == 2)
-                        {
-                            Console.WriteLine("Согласны ли вы выбрать меч  3 ровня?y/n");
-                            string temp_wp = Console.ReadLine();
-                            if (temp_wp == "y")
-                            {
-                                igrok.weapon = weapons[2];
-                            }
+                            igrok.weapon = weapons[1];
                         }
                     }
-                
-                    if (temp_item == 2)
+                    if (temp_weapon == 2)
                     {
-                        int temp_armor = random.Next(2);
-                        if (temp_armor == 0)
+                        Console.WriteLine("Согласны ли вы выбрать меч  3 ровня?y/n");
+                        string temp_wp = Console.ReadLine();
+                        if (temp_wp == "y")
                         {
-                            Console.WriteLine("Согласны ли вы выбрать палку 1 ровня?y/n");
-                            string temp_ar = Console.ReadLine();
-                            if (temp_ar == "y")
-                            {
-                                igrok.armor = armors[0];
-                            }
-                            if (temp_armor == 1)
-                            {
-                                Console.WriteLine("Согласны ли вы выбрать топор 2 ровня?y/n");
-                                temp_ar = Console.ReadLine();
-                                if (temp_ar == "y")
-                                {
-                                    igrok.armor = armors[1];
-                                }
-                            }
-                            if (temp_armor == 0)
-                            {
-                                Console.WriteLine("Согласны ли вы выбрать меч  3 ровня?y/n");
-                                temp_ar = Console.ReadLine();
-                                if (temp_ar == "y")
-                                {
-                                    igrok.armor = armors[2];
-                                }
-                            }
+                            igrok.weapon = weapons[2];
                         }
-
                     }
                 }
 
-
-                    if (progress > 50)//бой
+                if (temp_item == 2)
+                {
+                    int temp_armor = random.Next(2);
+                    if (temp_armor == 0)
                     {
-                        int temp_fight = random.Next(100);
+                        Console.WriteLine("Согласны ли вы выбрать щит 1 ровня?y/n");
+                        string temp_ar = Console.ReadLine();
+                        if (temp_ar == "y")
+                        {
+                            igrok.armor = armors[0];
+                        }
+                    }
+                        if (temp_armor == 1)
+                        {
+                            Console.WriteLine("Согласны ли вы выбрать щит 2 ровня?y/n");
+                            string temp_ar = Console.ReadLine();
+                            if (temp_ar == "y")
+                            {
+                                igrok.armor = armors[1];
+                            }
+                        }
+                        if (temp_armor == 0)
+                        {
+                            Console.WriteLine("Согласны ли вы выбрать щит  3 ровня?y/n");
+                            string temp_ar = Console.ReadLine();
+                            if (temp_ar == "y")
+                            {
+                                igrok.armor = armors[2];
+                            }
+                        }
+                }
+            }
+
+
+            if (progress > 50)//бой
+            {
+                int temp_fight = random.Next(100);
+                Console.WriteLine("Выберете защищаться(1) или атаковать(2)?");
+                int temp = Convert.ToInt32(Console.ReadLine());
+                switch (temp)
+                {
+                    case 1:
+                        int progess_za=random.Next(100);
+                        if(progess_za <= 20)
+                        {
+                            Console.WriteLine("Вы защитились!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("увы защита не прошла");
+                            igrok.health =igrok.health- 20;
+                        }
+                        break;
+                        case 2:
                         if (temp_fight <= 25)
                         {
                             Console.WriteLine("Ты встретил гоблина!");
@@ -154,8 +170,8 @@ class Program
                             if ((igrok.health + igrok.armor.armr) / vragy[1].ataka > vragy[1].health / igrok.weapon.damage)
                             {
                                 Console.WriteLine("Ты победил!");
-                            igrok.health = igrok.health - vragy[1].ataka;
-                    }
+                                igrok.health = igrok.health - vragy[1].ataka;
+                            }
                             else
                             {
                                 Console.WriteLine("увы ты проиграл...");
@@ -233,12 +249,15 @@ class Program
                                 hod_igry = false;
                             }
                         }
-
-                    }
-
+                        break;
                 }
-        }        
+
+            }
+
+        }
+    }
 }
+
         
     
 
