@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Core
+    class Core
     {
-        public static avtoEntities Context=new avtoEntities();
+        public static avtoEntities1 Context=new avtoEntities1();
     }
 }

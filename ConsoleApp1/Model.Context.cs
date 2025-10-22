@@ -13,10 +13,10 @@ namespace ConsoleApp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class avtoEntities : DbContext
+    public partial class avtoEntities1 : DbContext
     {
-        public avtoEntities()
-            : base("name=avtoEntities")
+        public avtoEntities1()
+            : base("name=avtoEntities1")
         {
         }
     
@@ -25,7 +25,7 @@ namespace ConsoleApp1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<pare> pare { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }
