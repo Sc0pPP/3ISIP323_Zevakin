@@ -43,7 +43,70 @@ namespace ConsoleApp1
             }
             Core.Context.SaveChanges();
         }
-        
+        public static void game()
+        {
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("Сейчас на складе есть:");
+            foreach (pare sp in pares)
+            {
+                Console.WriteLine($"{sp.Name},себестоимость-{sp.Price},колличество-{sp.count}");
+            }
+            Console.WriteLine($"{balance}-баланс");
+            int temp_break = random.Next(0, 5);
+            Console.WriteLine($"К вам приехал клиент,и у него сломано {name[temp_break]}\nвыберете какую деталь вы ему поставите");
+            int temp_choice = Convert.ToInt32(Console.ReadLine());
+            int coun;
+            foreach(pare pr in pares)
+            {
+                if (pr.Name == name[temp_choice])
+                {
+                    coun = pr.count;
+                }
+            }
+            if (temp_choice == temp_break)
+            {
+                
+                Console.WriteLine("Ты правильно выбрал деталь и починил машину!");
+                balance = balance + ((pares.First(u => u.Name == name[temp_choice]).Price / 100) * 20);
+
+                pare editpare = Core.Context.pare.ToList().Last(u => u.Name == pares[temp_choice].Name); // находим пользователя для изменений
+                editpare.count -= 1; // вносим изменения
+
+                Core.Context.SaveChanges();
+
+            }
+            if (temp_choice != temp_break)
+            {
+                Console.WriteLine("Ты непраивльно выбрал деталь для замены...");
+                balance = balance - ((pares.First(u => u.Name == name[temp_choice]).Price / 100) * 20);
+                pare editpare = Core.Context.pare.ToList().Last(u => u.Name == pares[temp_choice].Name); // находим пользователя для изменений
+                editpare.count -= 1; // вносим изменения
+
+                Core.Context.SaveChanges();
+            }
+            if (balance <= 0)
+            {
+                Console.WriteLine("Увы ты проиграл...");
+                foreach (var pare in Core.Context.pare.ToList())
+                {
+                    Core.Context.pare.Remove(pare);
+                }
+                Core.Context.SaveChanges();
+
+            }
+            Console.WriteLine("если ты хочешь купить какую то деталь напиши y/n");
+            string temp_choice_buy=Console.ReadLine();
+            if (temp_choice_buy == "y")
+            {
+                buy();
+            }
+
+
+
+
+            Console.WriteLine("----------------------------------------------------------");
+
+        }
         public static void buy()
         {
             Console.WriteLine("какую запчасть вы хотите купить?\n" +
@@ -59,12 +122,34 @@ namespace ConsoleApp1
             Core.Context.SaveChanges();
 
         }
-        
+        public static void game_while()
+        {
+            while (true)
+            {
+                Console.WriteLine("ВЫберете следущий ход 1 или очистить базу 2");
+                int temp_game = Convert.ToInt32(Console.ReadLine());
+                switch (temp_game)
+                {
+                    case 1:
+                        game();
+                        break;
+                    case 2:
+                        foreach (var pare in Core.Context.pare.ToList())
+                        {
+                            Core.Context.pare.Remove(pare);
+                        }
+                        Core.Context.SaveChanges();
+                        break;
+
+
+                }
+            }
+        }
         static void Main(string[] args)
         {
             add();
             rndm_add();
-         
+            game_while();
         }
 
     }
