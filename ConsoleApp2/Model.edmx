@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище shopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsersID" Type="int" Nullable="false" />
+          <Property Name="TovarID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsersID" Type="int" Nullable="false" />
+          <Property Name="TovarID" Type="int" Nullable="false" />
+          <Property Name="PvzID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pvz">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Addres" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tovary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TovaryCart">
+          <Key>
+            <PropertyRef Name="TCID" />
+          </Key>
+          <Property Name="TovaryID" Type="int" Nullable="false" />
+          <Property Name="CartID" Type="int" Nullable="false" />
+          <Property Name="TCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TovaryOrader">
+          <Key>
+            <PropertyRef Name="TVID" />
+          </Key>
+          <Property Name="TovarID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="TVID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="passwrod" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_cart_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_pvz">
+          <End Role="pvz" Type="Self.pvz" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pvz">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="PvzID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovaryCart_cart">
+          <End Role="cart" Type="Self.cart" Multiplicity="1" />
+          <End Role="TovaryCart" Type="Self.TovaryCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cart">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TovaryCart">
+              <PropertyRef Name="CartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovaryCart_tovary">
+          <End Role="tovary" Type="Self.tovary" Multiplicity="1" />
+          <End Role="TovaryCart" Type="Self.TovaryCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tovary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TovaryCart">
+              <PropertyRef Name="TovaryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovaryOrader_order">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="TovaryOrader" Type="Self.TovaryOrader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TovaryOrader">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovaryOrader_tovary">
+          <End Role="tovary" Type="Self.tovary" Multiplicity="1" />
+          <End Role="TovaryOrader" Type="Self.TovaryOrader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tovary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TovaryOrader">
+              <PropertyRef Name="TovarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище shopModelContainer">
+          <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order" EntityType="Self.order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pvz" EntityType="Self.pvz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tovary" EntityType="Self.tovary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TovaryCart" EntityType="Self.TovaryCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TovaryOrader" EntityType="Self.TovaryOrader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_cart_users" Association="Self.FK_cart_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_pvz" Association="Self.FK_order_pvz">
+            <End Role="pvz" EntitySet="pvz" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_users" Association="Self.FK_order_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovaryCart_cart" Association="Self.FK_TovaryCart_cart">
+            <End Role="cart" EntitySet="cart" />
+            <End Role="TovaryCart" EntitySet="TovaryCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovaryCart_tovary" Association="Self.FK_TovaryCart_tovary">
+            <End Role="tovary" EntitySet="tovary" />
+            <End Role="TovaryCart" EntitySet="TovaryCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovaryOrader_order" Association="Self.FK_TovaryOrader_order">
+            <End Role="order" EntitySet="order" />
+            <End Role="TovaryOrader" EntitySet="TovaryOrader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovaryOrader_tovary" Association="Self.FK_TovaryOrader_tovary">
+            <End Role="tovary" EntitySet="tovary" />
+            <End Role="TovaryOrader" EntitySet="TovaryOrader" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="shopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsersID" Type="Int32" Nullable="false" />
+          <Property Name="TovarID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_cart_users" FromRole="cart" ToRole="users" />
+          <NavigationProperty Name="TovaryCart" Relationship="Self.FK_TovaryCart_cart" FromRole="cart" ToRole="TovaryCart" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsersID" Type="Int32" Nullable="false" />
+          <Property Name="TovarID" Type="Int32" Nullable="false" />
+          <Property Name="PvzID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="pvz" Relationship="Self.FK_order_pvz" FromRole="order" ToRole="pvz" />
+          <NavigationProperty Name="users" Relationship="Self.FK_order_users" FromRole="order" ToRole="users" />
+          <NavigationProperty Name="TovaryOrader" Relationship="Self.FK_TovaryOrader_order" FromRole="order" ToRole="TovaryOrader" />
+        </EntityType>
+        <EntityType Name="pvz">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Addres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="order" Relationship="Self.FK_order_pvz" FromRole="pvz" ToRole="order" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tovary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TovaryCart" Relationship="Self.FK_TovaryCart_tovary" FromRole="tovary" ToRole="TovaryCart" />
+          <NavigationProperty Name="TovaryOrader" Relationship="Self.FK_TovaryOrader_tovary" FromRole="tovary" ToRole="TovaryOrader" />
+        </EntityType>
+        <EntityType Name="TovaryCart">
+          <Key>
+            <PropertyRef Name="TCID" />
+          </Key>
+          <Property Name="TovaryID" Type="Int32" Nullable="false" />
+          <Property Name="CartID" Type="Int32" Nullable="false" />
+          <Property Name="TCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="cart" Relationship="Self.FK_TovaryCart_cart" FromRole="TovaryCart" ToRole="cart" />
+          <NavigationProperty Name="tovary" Relationship="Self.FK_TovaryCart_tovary" FromRole="TovaryCart" ToRole="tovary" />
+        </EntityType>
+        <EntityType Name="TovaryOrader">
+          <Key>
+            <PropertyRef Name="TVID" />
+          </Key>
+          <Property Name="TovarID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="TVID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="order" Relationship="Self.FK_TovaryOrader_order" FromRole="TovaryOrader" ToRole="order" />
+          <NavigationProperty Name="tovary" Relationship="Self.FK_TovaryOrader_tovary" FromRole="TovaryOrader" ToRole="tovary" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passwrod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="cart" Relationship="Self.FK_cart_users" FromRole="users" ToRole="cart" />
+          <NavigationProperty Name="order" Relationship="Self.FK_order_users" FromRole="users" ToRole="order" />
+        </EntityType>
+        <Association Name="FK_cart_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovaryCart_cart">
+          <End Role="cart" Type="Self.cart" Multiplicity="1" />
+          <End Role="TovaryCart" Type="Self.TovaryCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cart">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TovaryCart">
+              <PropertyRef Name="CartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_pvz">
+          <End Role="pvz" Type="Self.pvz" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pvz">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="PvzID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_order_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="UsersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovaryOrader_order">
+          <End Role="order" Type="Self.order" Multiplicity="1" />
+          <End Role="TovaryOrader" Type="Self.TovaryOrader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TovaryOrader">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovaryCart_tovary">
+          <End Role="tovary" Type="Self.tovary" Multiplicity="1" />
+          <End Role="TovaryCart" Type="Self.TovaryCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tovary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TovaryCart">
+              <PropertyRef Name="TovaryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TovaryOrader_tovary">
+          <End Role="tovary" Type="Self.tovary" Multiplicity="1" />
+          <End Role="TovaryOrader" Type="Self.TovaryOrader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tovary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TovaryOrader">
+              <PropertyRef Name="TovarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="shopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cart" EntityType="Self.cart" />
+          <EntitySet Name="order" EntityType="Self.order" />
+          <EntitySet Name="pvz" EntityType="Self.pvz" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tovary" EntityType="Self.tovary" />
+          <EntitySet Name="TovaryCart" EntityType="Self.TovaryCart" />
+          <EntitySet Name="TovaryOrader" EntityType="Self.TovaryOrader" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="FK_cart_users" Association="Self.FK_cart_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovaryCart_cart" Association="Self.FK_TovaryCart_cart">
+            <End Role="cart" EntitySet="cart" />
+            <End Role="TovaryCart" EntitySet="TovaryCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_pvz" Association="Self.FK_order_pvz">
+            <End Role="pvz" EntitySet="pvz" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_order_users" Association="Self.FK_order_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovaryOrader_order" Association="Self.FK_TovaryOrader_order">
+            <End Role="order" EntitySet="order" />
+            <End Role="TovaryOrader" EntitySet="TovaryOrader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovaryCart_tovary" Association="Self.FK_TovaryCart_tovary">
+            <End Role="tovary" EntitySet="tovary" />
+            <End Role="TovaryCart" EntitySet="TovaryCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TovaryOrader_tovary" Association="Self.FK_TovaryOrader_tovary">
+            <End Role="tovary" EntitySet="tovary" />
+            <End Role="TovaryOrader" EntitySet="TovaryOrader" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище shopModelContainer" CdmEntityContainer="shopEntities">
+          <EntitySetMapping Name="cart">
+            <EntityTypeMapping TypeName="shopModel.cart">
+              <MappingFragment StoreEntitySet="cart">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UsersID" ColumnName="UsersID" />
+                <ScalarProperty Name="TovarID" ColumnName="TovarID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order">
+            <EntityTypeMapping TypeName="shopModel.order">
+              <MappingFragment StoreEntitySet="order">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UsersID" ColumnName="UsersID" />
+                <ScalarProperty Name="TovarID" ColumnName="TovarID" />
+                <ScalarProperty Name="PvzID" ColumnName="PvzID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pvz">
+            <EntityTypeMapping TypeName="shopModel.pvz">
+              <MappingFragment StoreEntitySet="pvz">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Addres" ColumnName="Addres" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="shopModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tovary">
+            <EntityTypeMapping TypeName="shopModel.tovary">
+              <MappingFragment StoreEntitySet="tovary">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TovaryCart">
+            <EntityTypeMapping TypeName="shopModel.TovaryCart">
+              <MappingFragment StoreEntitySet="TovaryCart">
+                <ScalarProperty Name="TovaryID" ColumnName="TovaryID" />
+                <ScalarProperty Name="CartID" ColumnName="CartID" />
+                <ScalarProperty Name="TCID" ColumnName="TCID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TovaryOrader">
+            <EntityTypeMapping TypeName="shopModel.TovaryOrader">
+              <MappingFragment StoreEntitySet="TovaryOrader">
+                <ScalarProperty Name="TovarID" ColumnName="TovarID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="TVID" ColumnName="TVID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="shopModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="passwrod" ColumnName="passwrod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
