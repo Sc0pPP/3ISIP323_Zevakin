@@ -84,9 +84,6 @@
     <Compile Include="tovary.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="TovaryCart.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="TovaryOrader.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

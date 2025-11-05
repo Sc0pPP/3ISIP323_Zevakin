@@ -17,8 +17,8 @@ namespace ConsoleApp2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tovary()
         {
-            this.TovaryCart = new HashSet<TovaryCart>();
             this.TovaryOrader = new HashSet<TovaryOrader>();
+            this.cart = new HashSet<cart>();
         }
     
         public int ID { get; set; }
@@ -27,8 +27,8 @@ namespace ConsoleApp2
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TovaryCart> TovaryCart { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TovaryOrader> TovaryOrader { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cart> cart { get; set; }
     }
 }

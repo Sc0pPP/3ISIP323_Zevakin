@@ -14,18 +14,11 @@ namespace ConsoleApp2
     
     public partial class cart
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public cart()
-        {
-            this.TovaryCart = new HashSet<TovaryCart>();
-        }
-    
         public int ID { get; set; }
         public int UsersID { get; set; }
         public int TovarID { get; set; }
     
         public virtual users users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TovaryCart> TovaryCart { get; set; }
+        public virtual tovary tovary { get; set; }
     }
 }

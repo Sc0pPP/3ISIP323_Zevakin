@@ -30,7 +30,6 @@ namespace ConsoleApp2
         public virtual DbSet<pvz> pvz { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<tovary> tovary { get; set; }
-        public virtual DbSet<TovaryCart> TovaryCart { get; set; }
         public virtual DbSet<TovaryOrader> TovaryOrader { get; set; }
         public virtual DbSet<users> users { get; set; }
     }

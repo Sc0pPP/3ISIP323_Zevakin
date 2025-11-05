@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище shopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище shopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cart">
           <Key>
             <PropertyRef Name="ID" />
@@ -49,14 +49,6 @@
           <Property Name="Price" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="TovaryCart">
-          <Key>
-            <PropertyRef Name="TCID" />
-          </Key>
-          <Property Name="TovaryID" Type="int" Nullable="false" />
-          <Property Name="CartID" Type="int" Nullable="false" />
-          <Property Name="TCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
         <EntityType Name="TovaryOrader">
           <Key>
             <PropertyRef Name="TVID" />
@@ -73,6 +65,18 @@
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="passwrod" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_cart_tovary">
+          <End Role="tovary" Type="Self.tovary" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tovary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="TovarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_cart_users">
           <End Role="users" Type="Self.users" Multiplicity="1" />
           <End Role="cart" Type="Self.cart" Multiplicity="*" />
@@ -109,30 +113,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TovaryCart_cart">
-          <End Role="cart" Type="Self.cart" Multiplicity="1" />
-          <End Role="TovaryCart" Type="Self.TovaryCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cart">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TovaryCart">
-              <PropertyRef Name="CartID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TovaryCart_tovary">
-          <End Role="tovary" Type="Self.tovary" Multiplicity="1" />
-          <End Role="TovaryCart" Type="Self.TovaryCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tovary">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TovaryCart">
-              <PropertyRef Name="TovaryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TovaryOrader_order">
           <End Role="order" Type="Self.order" Multiplicity="1" />
           <End Role="TovaryOrader" Type="Self.TovaryOrader" Multiplicity="*" />
@@ -163,9 +143,12 @@
           <EntitySet Name="pvz" EntityType="Self.pvz" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tovary" EntityType="Self.tovary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TovaryCart" EntityType="Self.TovaryCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TovaryOrader" EntityType="Self.TovaryOrader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_cart_tovary" Association="Self.FK_cart_tovary">
+            <End Role="tovary" EntitySet="tovary" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
           <AssociationSet Name="FK_cart_users" Association="Self.FK_cart_users">
             <End Role="users" EntitySet="users" />
             <End Role="cart" EntitySet="cart" />
@@ -178,14 +161,6 @@
             <End Role="users" EntitySet="users" />
             <End Role="order" EntitySet="order" />
           </AssociationSet>
-          <AssociationSet Name="FK_TovaryCart_cart" Association="Self.FK_TovaryCart_cart">
-            <End Role="cart" EntitySet="cart" />
-            <End Role="TovaryCart" EntitySet="TovaryCart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TovaryCart_tovary" Association="Self.FK_TovaryCart_tovary">
-            <End Role="tovary" EntitySet="tovary" />
-            <End Role="TovaryCart" EntitySet="TovaryCart" />
-          </AssociationSet>
           <AssociationSet Name="FK_TovaryOrader_order" Association="Self.FK_TovaryOrader_order">
             <End Role="order" EntitySet="order" />
             <End Role="TovaryOrader" EntitySet="TovaryOrader" />
@@ -195,8 +170,7 @@
             <End Role="TovaryOrader" EntitySet="TovaryOrader" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="shopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -208,7 +182,7 @@
           <Property Name="UsersID" Type="Int32" Nullable="false" />
           <Property Name="TovarID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="users" Relationship="Self.FK_cart_users" FromRole="cart" ToRole="users" />
-          <NavigationProperty Name="TovaryCart" Relationship="Self.FK_TovaryCart_cart" FromRole="cart" ToRole="TovaryCart" />
+          <NavigationProperty Name="tovary" Relationship="shopModel.FK_cart_tovary" FromRole="cart" ToRole="tovary" />
         </EntityType>
         <EntityType Name="order">
           <Key>
@@ -249,18 +223,8 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="TovaryCart" Relationship="Self.FK_TovaryCart_tovary" FromRole="tovary" ToRole="TovaryCart" />
           <NavigationProperty Name="TovaryOrader" Relationship="Self.FK_TovaryOrader_tovary" FromRole="tovary" ToRole="TovaryOrader" />
-        </EntityType>
-        <EntityType Name="TovaryCart">
-          <Key>
-            <PropertyRef Name="TCID" />
-          </Key>
-          <Property Name="TovaryID" Type="Int32" Nullable="false" />
-          <Property Name="CartID" Type="Int32" Nullable="false" />
-          <Property Name="TCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="cart" Relationship="Self.FK_TovaryCart_cart" FromRole="TovaryCart" ToRole="cart" />
-          <NavigationProperty Name="tovary" Relationship="Self.FK_TovaryCart_tovary" FromRole="TovaryCart" ToRole="tovary" />
+          <NavigationProperty Name="cart" Relationship="shopModel.FK_cart_tovary" FromRole="tovary" ToRole="cart" />
         </EntityType>
         <EntityType Name="TovaryOrader">
           <Key>
@@ -291,18 +255,6 @@
             </Principal>
             <Dependent Role="cart">
               <PropertyRef Name="UsersID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TovaryCart_cart">
-          <End Role="cart" Type="Self.cart" Multiplicity="1" />
-          <End Role="TovaryCart" Type="Self.TovaryCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cart">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TovaryCart">
-              <PropertyRef Name="CartID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -342,18 +294,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TovaryCart_tovary">
-          <End Role="tovary" Type="Self.tovary" Multiplicity="1" />
-          <End Role="TovaryCart" Type="Self.TovaryCart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tovary">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TovaryCart">
-              <PropertyRef Name="TovaryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TovaryOrader_tovary">
           <End Role="tovary" Type="Self.tovary" Multiplicity="1" />
           <End Role="TovaryOrader" Type="Self.TovaryOrader" Multiplicity="*" />
@@ -372,16 +312,11 @@
           <EntitySet Name="pvz" EntityType="Self.pvz" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="tovary" EntityType="Self.tovary" />
-          <EntitySet Name="TovaryCart" EntityType="Self.TovaryCart" />
           <EntitySet Name="TovaryOrader" EntityType="Self.TovaryOrader" />
           <EntitySet Name="users" EntityType="Self.users" />
           <AssociationSet Name="FK_cart_users" Association="Self.FK_cart_users">
             <End Role="users" EntitySet="users" />
             <End Role="cart" EntitySet="cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TovaryCart_cart" Association="Self.FK_TovaryCart_cart">
-            <End Role="cart" EntitySet="cart" />
-            <End Role="TovaryCart" EntitySet="TovaryCart" />
           </AssociationSet>
           <AssociationSet Name="FK_order_pvz" Association="Self.FK_order_pvz">
             <End Role="pvz" EntitySet="pvz" />
@@ -395,15 +330,27 @@
             <End Role="order" EntitySet="order" />
             <End Role="TovaryOrader" EntitySet="TovaryOrader" />
           </AssociationSet>
-          <AssociationSet Name="FK_TovaryCart_tovary" Association="Self.FK_TovaryCart_tovary">
-            <End Role="tovary" EntitySet="tovary" />
-            <End Role="TovaryCart" EntitySet="TovaryCart" />
-          </AssociationSet>
           <AssociationSet Name="FK_TovaryOrader_tovary" Association="Self.FK_TovaryOrader_tovary">
             <End Role="tovary" EntitySet="tovary" />
             <End Role="TovaryOrader" EntitySet="TovaryOrader" />
           </AssociationSet>
+          <AssociationSet Name="FK_cart_tovary" Association="shopModel.FK_cart_tovary">
+            <End Role="tovary" EntitySet="tovary" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_cart_tovary">
+          <End Type="shopModel.tovary" Role="tovary" Multiplicity="1" />
+          <End Type="shopModel.cart" Role="cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tovary">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="TovarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -456,15 +403,6 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TovaryCart">
-            <EntityTypeMapping TypeName="shopModel.TovaryCart">
-              <MappingFragment StoreEntitySet="TovaryCart">
-                <ScalarProperty Name="TovaryID" ColumnName="TovaryID" />
-                <ScalarProperty Name="CartID" ColumnName="CartID" />
-                <ScalarProperty Name="TCID" ColumnName="TCID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
