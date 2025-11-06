@@ -21,7 +21,7 @@
           <Property Name="UsersID" Type="int" Nullable="false" />
           <Property Name="TovarID" Type="int" Nullable="false" />
           <Property Name="PvzID" Type="int" Nullable="false" />
-          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="pvz">
           <Key>
@@ -192,7 +192,7 @@
           <Property Name="UsersID" Type="Int32" Nullable="false" />
           <Property Name="TovarID" Type="Int32" Nullable="false" />
           <Property Name="PvzID" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="pvz" Relationship="Self.FK_order_pvz" FromRole="order" ToRole="pvz" />
           <NavigationProperty Name="users" Relationship="Self.FK_order_users" FromRole="order" ToRole="users" />
           <NavigationProperty Name="TovaryOrader" Relationship="Self.FK_TovaryOrader_order" FromRole="order" ToRole="TovaryOrader" />

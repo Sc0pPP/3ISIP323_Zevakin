@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce3928eef2264b799d2a2ff862be2680" Name="Diagram1" ZoomLevel="97">
+      <Diagram DiagramId="ce3928eef2264b799d2a2ff862be2680" Name="Diagram1" ZoomLevel="125">
         <EntityTypeShape EntityType="shopModel.cart" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="shopModel.order" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="shopModel.pvz" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="shopModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="shopModel.tovary" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="shopModel.TovaryOrader" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="shopModel.users" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="shopModel.users" Width="1.875" PointX="0.75" PointY="4.125" IsExpanded="true" />
         <AssociationConnector Association="shopModel.FK_cart_users" ManuallyRouted="false" />
         <AssociationConnector Association="shopModel.FK_order_pvz" ManuallyRouted="false" />
         <AssociationConnector Association="shopModel.FK_order_users" ManuallyRouted="false" />
