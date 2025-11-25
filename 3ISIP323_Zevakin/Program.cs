@@ -1,2 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using _3ISIP323_Zevakin.Новая_папка;
+class Program
+{
+    static void Main(string[] args)
+    {
+        Game.MainGame();
+    }
+}
